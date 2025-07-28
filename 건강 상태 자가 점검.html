@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!-- saved from url=(0122)file:///C:/Users/82104/Documents/%EC%B9%B4%EC%B9%B4%EC%98%A4%ED%86%A1%20%EB%B0%9B%EC%9D%80%20%ED%8C%8C%EC%9D%BC/index.html -->
+<html lang="ko"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <title>건강 상태 자가 점검</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background-color: #f2f2f2;
+    }
+    h1 {
+      color: #2d6cdf;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    input[type="number"] {
+      padding: 5px;
+      margin-top: 5px;
+      width: 100px;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>건강 상태 자가 점검</h1>
+
+  <form id="healthForm">
+    <label>체온 (℃): <input type="number" step="0.1" id="temperature"></label>
+    <label>심박수 (bpm): <input type="number" id="heartrate"></label>
+    <label>수면 시간 (시간): <input type="number" step="0.1" id="sleep"></label>
+    <label>스트레스 (1~10): <input type="number" id="stress" min="1" max="10"></label>
+    <button type="submit">결과 확인</button>
+  </form>
+
+  <div id="result" class="result"></div>
+
+  <script>
+    document.getElementById('healthForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const temp = parseFloat(document.getElementById('temperature').value);
+      const hr = parseInt(document.getElementById('heartrate').value);
+      const sleep = parseFloat(document.getElementById('sleep').value);
+      const stress = parseInt(document.getElementById('stress').value);
+
+      let resultText = '';
+      let bgColor = '#fff';
+
+      if (temp < 36 || temp > 37.5) {
+        resultText += '🔴 체온이 정상 범위를 벗어났습니다.<br>';
+        bgColor = '#ffd4d4';
+      } else {
+        resultText += '🟢 체온이 정상입니다.<br>';
+      }
+
+      if (hr < 60 || hr > 100) {
+        resultText += '🔴 심박수가 정상 범위를 벗어났습니다.<br>';
+        bgColor = '#ffd4d4';
+      } else {
+        resultText += '🟢 심박수가 정상입니다.<br>';
+      }
+
+      if (sleep < 6 || sleep > 9) {
+        resultText += '🟡 수면 시간이 권장 범위를 벗어났습니다.<br>';
+      } else {
+        resultText += '🟢 수면 시간이 적절합니다.<br>';
+      }
+
+      if (stress >= 8) {
+        resultText += '🔴 스트레스 지수가 높습니다. 휴식이 필요해요.<br>';
+        bgColor = '#ffd4d4';
+      } else if (stress >= 5) {
+        resultText += '🟡 스트레스 수준이 중간입니다.<br>';
+      } else {
+        resultText += '🟢 스트레스 수준이 낮습니다.<br>';
+      }
+
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = resultText;
+      resultDiv.style.backgroundColor = bgColor;
+    });
+  </script>
+
+
+
+</body></html>
